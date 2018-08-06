@@ -1,4 +1,4 @@
-# var-env ![](computer.png)
+# var-env <img src="computer.png" alt="Logo" height="35" align="top" />
 
 #### Create persistent env variables easily and quickly for testing locally.
 
