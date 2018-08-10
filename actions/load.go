@@ -9,6 +9,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Loader Load all the environment variables present in the specified yaml file, then write it on the the .bashrc to make it permanent.
 func Loader(filename string) error {
 	log.Println("Load " + filename)
 	data, errOnYaml := openYml(filename)
