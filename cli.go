@@ -19,10 +19,14 @@ func main() {
 			Name:  "load",
 			Usage: "The yaml file where the variables live in, from `FILE`",
 			Action: func(c *cli.Context) error {
-				err := actions.Loader(c.Args().First())
-				if err != nil {
-					return err
+				if c.Args().Present() {
+					err := actions.Loader(c.Args().First())
+					if err != nil {
+						return err
+					}
+					return nil
 				}
+				log.Println("No argument given...")
 				return nil
 			},
 		},
@@ -31,18 +35,28 @@ func main() {
 			Aliases: []string{"l"},
 			Usage:   "List all the persistent environment variables on your computer.",
 			Action: func(c *cli.Context) error {
-				fmt.Println("List all applications...")
-				actions.List()
+				fmt.Println("\nList all env variables created by VARENV...\n")
+				err := actions.List()
+				if err != nil {
+					return err
+				}
 				return nil
 			},
 		},
 		{
-			Name:    "Add",
+			Name:    "add",
 			Aliases: []string{"a"},
 			Usage:   "Quick commands to add an env variables through the cli interface",
 			Action: func(c *cli.Context) error {
-				fmt.Println("Add env variables ", c.Args())
-				actions.Add()
+				if c.Args().Present() {
+					fmt.Println("\nAdd env variables...\n")
+					err := actions.Add(c.Args())
+					if err != nil {
+						return err
+					}
+					return nil
+				}
+				log.Println("\tNo argument given")
 				return nil
 			},
 		},
