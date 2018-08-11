@@ -27,6 +27,10 @@ func Remove(args []string) error {
 			return errorOnSed
 		}
 	}
+	errOnRefreshing := refreshBashFile()
+	if errOnRefreshing != nil {
+		return errOnRefreshing
+	}
 	return nil
 }
 
