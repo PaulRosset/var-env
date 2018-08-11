@@ -26,7 +26,7 @@ func main() {
 					}
 					return nil
 				}
-				log.Println("No argument given...")
+				fmt.Println("No argument given...")
 				return nil
 			},
 		},
@@ -56,7 +56,7 @@ func main() {
 					}
 					return nil
 				}
-				log.Println("\tNo argument given")
+				fmt.Println("\tNo argument given")
 				return nil
 			},
 		},
@@ -65,8 +65,15 @@ func main() {
 			Aliases: []string{"rm"},
 			Usage:   "Quick commands to remove an env variables through the cli interface",
 			Action: func(c *cli.Context) error {
-				fmt.Println("Remove env variables ", c.Args())
-				actions.Remove()
+				if c.Args().Present() {
+					fmt.Println("\nRemove env variables...\n")
+					err := actions.Remove(c.Args())
+					if err != nil {
+						return err
+					}
+					return nil
+				}
+				fmt.Println("\tNo argument given")
 				return nil
 			},
 		},
