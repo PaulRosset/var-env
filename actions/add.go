@@ -39,7 +39,7 @@ func checkArgsComptability(args []string) error {
 			return err
 		}
 		if !isValidForProcess {
-			return errors.New(arg + " is not a valid argument to be written.")
+			return errors.New(arg + " is not a valid argument to be written. Expected: [NAME VARIABLE]=[VALUE]")
 		}
 	}
 	return nil
