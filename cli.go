@@ -35,7 +35,7 @@ func main() {
 			Aliases: []string{"l"},
 			Usage:   "List all the persistent environment variables on your computer.",
 			Action: func(c *cli.Context) error {
-				fmt.Println("\nList all env variables created by VARENV...\n")
+				fmt.Printf("\nList all env variables created by VARENV...\n\n")
 				varsEnv, err := actions.List()
 				for _, varEnv := range varsEnv {
 					fmt.Printf("\t%s\n", varEnv)
@@ -52,7 +52,7 @@ func main() {
 			Usage:   "Quick commands to add an env variables through the cli interface",
 			Action: func(c *cli.Context) error {
 				if c.Args().Present() {
-					fmt.Println("\nAdd env variables...\n")
+					fmt.Printf("\nAdd env variables...\n\n")
 					err := actions.Add(c.Args())
 					if err != nil {
 						return err
@@ -69,7 +69,7 @@ func main() {
 			Usage:   "Quick commands to remove an env variables through the cli interface",
 			Action: func(c *cli.Context) error {
 				if c.Args().Present() {
-					fmt.Println("\nRemove env variables...\n")
+					fmt.Printf("\nRemove env variables...\n\n")
 					err := actions.Remove(c.Args())
 					if err != nil {
 						return err
