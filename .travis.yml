@@ -13,5 +13,9 @@ env:
   global:
     - PATH=$HOME/gopath/bin:$PATH
 
+before_install:
+  - go get github.com/urfave/cli
+  - go get gopkg.in/yaml.v2
+
 script:
   - go test ./actions/
