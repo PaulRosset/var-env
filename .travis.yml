@@ -9,5 +9,8 @@ go:
 
 sudo: false
 
+before_install:
+  - go get github.com/urfave/cli
+
 install:
   - go test ./actions
