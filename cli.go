@@ -5,7 +5,8 @@ import (
 	"log"
 	"os"
 
-	"./actions"
+	"github/PaulRosset/var-env/actions"
+
 	"github.com/urfave/cli"
 )
 
