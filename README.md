@@ -9,7 +9,7 @@
 
 ## Install
 
-...
+`go get github.com/PaulRosset/var-env/cmd/varenv`
 
 ## Usage
 
