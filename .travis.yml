@@ -9,8 +9,12 @@ go:
 
 sudo: false
 
+env:
+  global:
+    - PATH=$HOME/gopath/bin:$PATH
+
 before_install:
   - go get github.com/urfave/cli
 
-install:
-  - go test ./actions
+script:
+  - go test ./actions/
