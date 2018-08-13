@@ -6,12 +6,13 @@ import (
 )
 
 // List All the env variables created by VARENV software...
-func List() error {
+func List() ([]string, error) {
+	getVarsEnv := []string{}
 	for _, varEnv := range os.Environ() {
 		if varEnv[:7] == "VARENV_" {
-			fmt.Printf("\t%s\n", varEnv)
+			getVarsEnv = append(getVarsEnv, varEnv)
 		}
 	}
 	fmt.Printf("\n")
-	return nil
+	return getVarsEnv, nil
 }

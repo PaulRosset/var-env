@@ -2,7 +2,7 @@ package actions
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"regexp"
@@ -11,7 +11,6 @@ import (
 
 // Remove one or multiple env variables written as permanent.
 func Remove(args []string) error {
-	fmt.Println("RM")
 	errOnArgs := checkValidityArgs(args)
 	if errOnArgs != nil {
 		return errOnArgs
@@ -21,15 +20,13 @@ func Remove(args []string) error {
 		return errOnPresentVars
 	}
 	for _, arg := range args {
-		cmd := exec.Command("sed", "-i", "'/^export"+arg+"/ d'", os.Getenv("HOME")+"/.bashrc")
+		cmd := exec.Command("sed", "-i", "/^export "+arg+"/ d", os.Getenv("HOME")+"/.bashrc")
 		errorOnSed := cmd.Run()
 		if errorOnSed != nil {
+			log.Println("Error has been throw by the remove command, nothing has been removed")
 			return errorOnSed
 		}
-	}
-	errOnRefreshing := refreshBashFile()
-	if errOnRefreshing != nil {
-		return errOnRefreshing
+		log.Printf("%v removed", arg)
 	}
 	return nil
 }

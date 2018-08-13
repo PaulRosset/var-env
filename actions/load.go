@@ -3,8 +3,6 @@ package actions
 import (
 	"log"
 	"os"
-	"os/exec"
-	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -47,36 +45,19 @@ func openYml(filename string) ([]byte, error) {
 }
 
 func writeEnv(varsEnv map[interface{}]interface{}, filename string) error {
-	file, errOnOpenDestFile := os.OpenFile(filename, os.O_WRONLY, 0755)
+	file, errOnOpenDestFile := os.OpenFile(filename, os.O_WRONLY|os.O_APPEND, 0644)
 	if errOnOpenDestFile != nil {
 		return errOnOpenDestFile
 	}
 	defer file.Close()
-	fileStats, errOnStateBash := file.Stat()
-	if errOnStateBash != nil {
-		return errOnOpenDestFile
-	}
 	for name, val := range varsEnv {
-		lineToExport := []string{"export VARENV_", name.(string), "=", val.(string), "\n"}
-		_, errOnWritting := file.WriteAt([]byte(strings.Join(lineToExport, "")), fileStats.Size())
-		log.Println("Writting env variables...")
+		_, errOnWritting := file.WriteString("export VARENV_" + name.(string) + "=" + val.(string) + "\n")
 		if errOnWritting != nil {
+			log.Println(errOnWritting)
 			return errOnWritting
 		}
-		errOnRefreshing := refreshBashFile()
-		if errOnRefreshing != nil {
-			return errOnRefreshing
-		}
+		log.Printf("%v added", name)
 	}
-	return nil
-}
-
-func refreshBashFile() error {
-	cmd := exec.Command("sh", ".", "~/.bashrc")
-	err := cmd.Run()
-	if err != nil {
-		return err
-	}
-	log.Println("~/.bashrc refreshed after writting.")
+	log.Println("Variable(s) set, you may need to refresh your bashrc to see the changes")
 	return nil
 }

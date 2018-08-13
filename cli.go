@@ -36,7 +36,10 @@ func main() {
 			Usage:   "List all the persistent environment variables on your computer.",
 			Action: func(c *cli.Context) error {
 				fmt.Println("\nList all env variables created by VARENV...\n")
-				err := actions.List()
+				varsEnv, err := actions.List()
+				for _, varEnv := range varsEnv {
+					fmt.Printf("\t%s\n", varEnv)
+				}
 				if err != nil {
 					return err
 				}
